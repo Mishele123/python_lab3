@@ -2,10 +2,10 @@ from handler import *
 
 class MainWindow(QWidget):
     def __init__(self) -> None:
+        self.select_folder = ""
         super().__init__()
         self.resize(300, 100)
         self.setUi()
-        self.select_folder: str
         
     def create_button(self) -> QPushButton:
         button = QPushButton("Путь к датасету")

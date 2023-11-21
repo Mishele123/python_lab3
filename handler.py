@@ -41,7 +41,7 @@ def create_dataset(select_folder: str, new_folder_path: str) -> None:
     print("Файл создался")
 
 def on_clicked_button(main_windows: QWidget) -> str:
-    folderpath = QtWidgets.QFileDialog.getExistingDirectory(main_windows, "Выберите папку")
+    folderpath = str(QtWidgets.QFileDialog.getExistingDirectory(main_windows, "Выберите папку"))
     print(f"Вы выбрали: {folderpath}")
     return folderpath
     
