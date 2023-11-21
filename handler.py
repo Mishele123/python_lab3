@@ -21,7 +21,7 @@ def create_dataset(select_folder: str, new_folder_path: str) -> None:
         csv_writer = csv.writer(csv_file)
 
         for folder in os.listdir(select_folder):
-            if folder != "tiger" or folder != "leopard":
+            if folder != "tiger" and folder != "leopard":
                 print("Не правильная папка")
                 return None
 
@@ -41,14 +41,15 @@ def create_dataset(select_folder: str, new_folder_path: str) -> None:
     print("Файл создался")
 
 def on_clicked_button(main_windows: QWidget) -> str:
-    folderpath = str(QtWidgets.QFileDialog.getExistingDirectory(main_windows, "Выберите папку"))
-    print(f"Вы выбрали: {folderpath}")
-    return folderpath
-    
-
-def on_clicked_button_for_make_dataset(main_windows: QWidget, select_folder: str) -> None:
-    print(select_folder)
     folderpath = QtWidgets.QFileDialog.getExistingDirectory(main_windows, "Выберите папку")
     print(f"Вы выбрали: {folderpath}")
+    main_windows.select_folder = folderpath
     
-    create_dataset(select_folder, folderpath)
+def on_clicked_button_for_dataset(main_window: QWidget) -> None:
+    print(main_window.select_folder)
+    folderpath = QtWidgets.QFileDialog.getExistingDirectory(main_window, "Выберите папку")
+    print(f"Вы выбрали: {folderpath}")
+    main_window.next_folder = folderpath
+    print(main_window.next_folder)
+
+    create_dataset(main_window.select_folder, main_window.next_folder)

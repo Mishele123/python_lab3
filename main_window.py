@@ -3,6 +3,7 @@ from handler import *
 class MainWindow(QWidget):
     def __init__(self) -> None:
         self.select_folder = ""
+        self.next_folder = ""
         super().__init__()
         self.resize(300, 100)
         self.setUi()
@@ -14,12 +15,12 @@ class MainWindow(QWidget):
 
     def create_button1(self) -> QPushButton:
         button = QPushButton("Создать файл аннотацию исходного датасета")
-        button.clicked.connect(lambda: on_clicked_button_for_make_dataset(self, self.select_folder))
+        button.clicked.connect(lambda: on_clicked_button_for_dataset(self))
         return button
-    
+        
     def create_button2(self) -> QPushButton:
         button = QPushButton("создания датасета с другой организацией файлов ")
-        button.clicked.connect(lambda: on_clicked_button_for_make_dataset(self, self.select_folder))
+        button.clicked.connect(lambda: on_clicked_button_for_dataset(self))
         return button
 
     def create_button3(self) -> QPushButton:
