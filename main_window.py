@@ -1,18 +1,12 @@
-import typing
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont
-import sys
-
-from PyQt6.QtWidgets import QWidget
-
+from handler import *
 
 class MainWindow(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.resize(300, 100)
         self.setUi()
-
+        self.select_folder: str
+        
     def create_label2(self) -> QLabel:
         textbox1 = QLabel("Путь к файлу назначения:")
         return textbox1
@@ -21,16 +15,13 @@ class MainWindow(QWidget):
         textbox1 = QLabel("Путь к папке назначения:")
         return textbox1
 
+    def create_button(self) -> QPushButton:
+        button = QPushButton("Путь к датасету")
 
-    def create_textbox2(self) -> QPushButton:
-        textbox = QTextEdit()
-        textbox.setFixedHeight(27)
-        return textbox
+        button.setCheckable(True)
+        self.select_folder = button.clicked.connect(lambda: on_clicked_button(self))
 
-    def create_textbox3(self) -> QTextEdit:
-        textbox = QTextEdit()
-        textbox.setFixedHeight(27)
-        return textbox
+        return button
 
     def create_button1(self) -> QPushButton:
         button = QPushButton("Создать файл аннотацию исходного датасета")
@@ -51,13 +42,13 @@ class MainWindow(QWidget):
 
     def setUi(self) -> None:
         layout = QVBoxLayout()
+        button = self.create_button()
+        layout.addWidget(button)
         layout.addWidget(QLabel("Задание 1"))
         layout.addWidget(self.create_label2())
-        layout.addWidget(self.create_textbox2())
         layout.addWidget(self.create_button1())
         layout.addWidget(QLabel("Задание 2"))
         layout.addWidget(self.create_label3())
-        layout.addWidget(self.create_textbox3())
         layout.addWidget(self.create_button2())
         layout.addWidget(QLabel("Задание 3"))
         layout.addWidget(self.create_button3())
