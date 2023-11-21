@@ -15,12 +15,12 @@ class MainWindow(QWidget):
 
     def create_button1(self) -> QPushButton:
         button = QPushButton("Создать файл аннотацию исходного датасета")
-        button.clicked.connect(lambda: on_clicked_button_for_dataset(self))
+        button.clicked.connect(lambda: create_dataset(self))
         return button
         
     def create_button2(self) -> QPushButton:
         button = QPushButton("создания датасета с другой организацией файлов ")
-        button.clicked.connect(lambda: on_clicked_button_for_dataset(self))
+        button.clicked.connect(lambda: copy_dataset_with_random(self))
         return button
 
     def create_button3(self) -> QPushButton:

@@ -2,11 +2,20 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QWidget
-
+import random
 import os
 import csv
+import shutil
 
-def create_dataset(select_folder: str, new_folder_path: str) -> None:
+def create_dataset(main_window: QWidget) -> None:
+
+    select_folder = main_window.select_folder
+    folderpath = QtWidgets.QFileDialog.getExistingDirectory(main_window, "Выберите папку")
+    print(f"Вы выбрали: {folderpath}")
+    main_window.next_folder = folderpath
+    
+    new_folder_path = main_window.next_folder
+
     print("Создание файла аннотации исходного датасета")
     annotation_file = "annotation.csv"
 
@@ -53,3 +62,72 @@ def on_clicked_button_for_dataset(main_window: QWidget) -> None:
     print(main_window.next_folder)
 
     create_dataset(main_window.select_folder, main_window.next_folder)
+
+
+
+
+def copy_dataset_with_random(main_window: QWidget) -> None:
+    source_dataset = main_window.select_folder
+    folderpath = QtWidgets.QFileDialog.getExistingDirectory(main_window, "Выберите папку")
+    print(f"Вы выбрали: {folderpath}")
+    main_window.next_folder = folderpath
+    
+    target_dataset = main_window.next_folder
+
+    os.makedirs(target_dataset, exist_ok=True)
+    annotation_file = os.path.join(target_dataset, 'annotation.csv')
+
+    with open(annotation_file, "w", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file)
+
+        for folder in os.listdir(source_dataset):
+            path_folder = os.path.join(source_dataset, folder)
+
+            print(len(os.listdir(path_folder)))
+            for img in os.listdir(path_folder):
+                img_path = os.path.join(path_folder, img)
+
+                new_img_name = f"{random.randint(1, 10000)}.jpg"
+
+                # полный путь к новому файлу
+                target_img_path = os.path.join(target_dataset, new_img_name)
+
+                # копируем картинку в новую папку
+                shutil.copy(img_path, target_img_path)
+
+                # абсолютный путь
+                absolute_path = os.path.abspath(target_img_path)
+
+                # относительный патч
+                relative_path = os.path.relpath(target_img_path, target_dataset)
+
+                csv_writer.writerow([absolute_path, relative_path, folder])
+    
+    print("Датасет скопировался")
+
+
+class Iterator:
+
+    def __init__(self, class_label, dataset_path) -> None:
+        self.class_label = class_label
+        self.dataset_path = dataset_path
+        self.class_path = os.path.join(self.dataset_path, class_label)
+        self.instances = self.get_instances()
+
+
+    def get_instances(self) -> list:
+        if not os.path.exists(self.class_path):
+            print(f"Папка {self.class_label} не найдена.")
+            return None
+
+        instances = os.listdir(self.class_path)
+        random.shuffle(instances)
+        return instances
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self) -> str:
+        if not self.instances:
+            raise StopIteration("Экземпляры закончились.")
+        return os.path.join(self.class_path, self.instances.pop(0))
