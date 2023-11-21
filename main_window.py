@@ -5,22 +5,21 @@ class MainWindow(QWidget):
         super().__init__()
         self.resize(300, 100)
         self.setUi()
-        self.select_folder = ""
-
+        self.select_folder: str
+        
     def create_button(self) -> QPushButton:
         button = QPushButton("Путь к датасету")
-
         self.select_folder = button.clicked.connect(lambda: on_clicked_button(self))
         return button
 
     def create_button1(self) -> QPushButton:
         button = QPushButton("Создать файл аннотацию исходного датасета")
-        button.clicked.connect(lambda: create_dataset(self.select_folder, on_clicked_button(self)))
+        button.clicked.connect(lambda: on_clicked_button_for_make_dataset(self, self.select_folder))
         return button
     
     def create_button2(self) -> QPushButton:
         button = QPushButton("создания датасета с другой организацией файлов ")
-        button.clicked.connect(lambda: create_dataset(self.select_folder, on_clicked_button(self)))
+        button.clicked.connect(lambda: on_clicked_button_for_make_dataset(self, self.select_folder))
         return button
 
     def create_button3(self) -> QPushButton:
