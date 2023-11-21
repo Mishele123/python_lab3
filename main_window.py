@@ -7,14 +7,6 @@ class MainWindow(QWidget):
         self.setUi()
         self.select_folder: str
         
-    def create_label2(self) -> QLabel:
-        textbox1 = QLabel("Путь к файлу назначения:")
-        return textbox1
-
-    def create_label3(self) -> QLabel:
-        textbox1 = QLabel("Путь к папке назначения:")
-        return textbox1
-
     def create_button(self) -> QPushButton:
         button = QPushButton("Путь к датасету")
 
@@ -45,10 +37,8 @@ class MainWindow(QWidget):
         button = self.create_button()
         layout.addWidget(button)
         layout.addWidget(QLabel("Задание 1"))
-        layout.addWidget(self.create_label2())
         layout.addWidget(self.create_button1())
         layout.addWidget(QLabel("Задание 2"))
-        layout.addWidget(self.create_label3())
         layout.addWidget(self.create_button2())
         layout.addWidget(QLabel("Задание 3"))
         layout.addWidget(self.create_button3())
