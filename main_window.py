@@ -50,11 +50,6 @@ class MainWindow(QWidget):
         self.label.setGeometry(0, 0, 100, 100)
         layout.addWidget(self.label)
         self.setLayout(layout)
-        # pixmap = QPixmap("D:\python_labs\qwerty\8.jpg")
-        # lbl = QLabel(self)
-        # lbl.setPixmap(pixmap)
-        # layout.addWidget(lbl)
-        # self.setLayout(layout)
 
 
 
