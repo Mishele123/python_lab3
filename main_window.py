@@ -4,6 +4,7 @@ class MainWindow(QWidget):
     def __init__(self) -> None:
         self.select_folder = ""
         self.next_folder = ""
+        current_image = None 
         super().__init__()
         self.resize(300, 100)
         self.setUi()
@@ -25,10 +26,12 @@ class MainWindow(QWidget):
 
     def create_button3(self) -> QPushButton:
         button = QPushButton("Следующая картинка tiger")
+        button.clicked.connect(lambda: next_tiger(self))
         return button
 
     def create_button4(self) -> QPushButton:
         button = QPushButton("Следующая картинка leopard")
+        button.clicked.connect(lambda: next_leopard(self))
         return button
     
 
@@ -43,7 +46,15 @@ class MainWindow(QWidget):
         layout.addWidget(QLabel("Задание 3"))
         layout.addWidget(self.create_button3())
         layout.addWidget(self.create_button4())
+        self.label = QLabel(self)
+        self.label.setGeometry(0, 0, 100, 100)
+        layout.addWidget(self.label)
         self.setLayout(layout)
+        # pixmap = QPixmap("D:\python_labs\qwerty\8.jpg")
+        # lbl = QLabel(self)
+        # lbl.setPixmap(pixmap)
+        # layout.addWidget(lbl)
+        # self.setLayout(layout)
 
 
 

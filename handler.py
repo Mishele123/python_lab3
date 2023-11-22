@@ -1,6 +1,6 @@
-from PyQt6 import QtCore, QtWidgets
+from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QWidget
 import random
 import os
@@ -131,3 +131,22 @@ class Iterator:
         if not self.instances:
             raise StopIteration("Экземпляры закончились.")
         return os.path.join(self.class_path, self.instances.pop(0))
+
+
+def next_tiger(main_window: QWidget) -> None:
+    class_label = "tiger"
+    manager = Iterator(class_label, main_window.select_folder)
+
+    image_path = manager.__next__()
+    if image_path:
+       main_window.current_image = QPixmap(image_path)
+       main_window.label.setPixmap(main_window.current_image.scaled(400, 400))
+
+def next_leopard(main_window: QWidget) -> None:
+    class_label = "leopard"
+    manager = Iterator(class_label, main_window.select_folder)
+
+    image_path = manager.__next__()
+    if image_path:
+       main_window.current_image = QPixmap(image_path)
+       main_window.label.setPixmap(main_window.current_image.scaled(400, 400))
